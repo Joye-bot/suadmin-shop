@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="mysqlGenerator" targetRuntime="Mybatis3">
+
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 可选插件地址：http://mybatis.org/generator/reference/plugins.html -->
+        <!-- 自动生成toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 自动生成equals方法和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+
+        <!-- 在注释中添加生成的时间戳 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库链接 -->
+        <jdbcConnection
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/shop?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;verifyServerCertificate=false&amp;useSSL=false"
+                userId="root"
+                password="yrO,cl:#x7y8"/>
+
+        <!-- javaTypeResolver: 用于解析和计算数据库类列类型和Java类型的映射关系 -->
+        <javaTypeResolver>
+            <!-- userJSR310Types: 是否支持JSR310，主要是JSR310的新日期类型 -->
+            <property name="useJSR310Types" value="ture"/>
+        </javaTypeResolver>
+
+        <!-- javaModelGenerator: 主要用于控制实体(Model)类的代码生成行为 -->
+        <!-- targetPackage: 生成的实体类的包名 -->
+        <!-- targetProject: 生成的实体类文件相对与项目(根目录)的位置 -->
+        <javaModelGenerator targetPackage="com.nndmw.db.domain" targetProject="src/main/java"/>
+
+        <!-- sqlMapGenerator: 主要用于控制XML映射文件的代码生成行为 -->
+        <!-- targetPackage: 生成的XML映射文件的包名 -->
+        <!-- targetProjcet: 生成的XML映射文件相对于项目(根目录)的位置 -->
+        <sqlMapGenerator targetPackage="com.nndmw.db.dao" targetProject="src/main/resources"/>
+
+        <!-- javaClientGenerator: 主要用于控制Mapper接口的代码生成行为 -->
+        <!-- type: Mapper接口生成策略 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.nndmw.db.dao" targetProject="src/main/java"/>
+
+        <!-- table: 要生成目标表 -->
+        <!-- tableName: 数据库表名称 -->
+        <table tableName="admin">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="role_ids" javaType="java.lang.Integer[]"
+                            typeHandler="com.nndmw.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        </table>
+
+    </context>
+
+</generatorConfiguration>
